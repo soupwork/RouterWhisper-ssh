@@ -24,11 +24,11 @@ class UserPrompts:
   
 
 if __name__ == "__main__":
-    #up
+    """testing cli View for CiscoWhisper-SSH"""
     print ("CLI view is main")
     testview = UserPrompts()
     up = testview.getLoginID()
  
 
     
-    #print(viewchoice)
+
