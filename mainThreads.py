@@ -17,6 +17,6 @@ def main():
     #ipaddylist=['192.168.1.1]
     
 if __name__ == '__main__':
-    
+    """ testing the main program """
     
     main() #call the main method
