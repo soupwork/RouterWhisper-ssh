@@ -14,15 +14,11 @@ class UserPrompts:
     def __init__(self):
         """set username and password"""
         print("init UserPrompts")
-        self.username = input("enter the username to authenticate to router/switch: ")
+        self.uname = input("enter the username to authenticate to router/switch: ")
         self.pword=getpass.getpass("please enter password <hidden> :")
-        print ("username is :", self.username)
+        print ("username is :", self.uname)
 
 
-    def getLoginID(self):
-       """returns username and password"""
-
-       return(self.username,self.pword)
     #End Class UserPrompts
     
   
@@ -32,8 +28,7 @@ if __name__ == "__main__":
     print ("CLI view is main")
     testview = UserPrompts()
     up = testview.getLoginID()
-    print ('up is ', up)
-    #print ('password is ', pword)
-    # print("pwd is ", os.getcwd())
+ 
+
     
     #print(viewchoice)
