@@ -73,11 +73,11 @@ class NetworkController:
         #     
 if __name__ == '__main__':
     """ testing the controller """
-    #devlist=['10.94.32.122', '10.94.32.121','10.94.32.120']
-    devlist=['10.94.32.122']
+    #devlist=['192.168.1.1', '192.168.1.1','192.168.1.1']
+    devlist=['192.168.1.1']
     cmdlist=['sh ver', 'sh clock','show clock']
     up=UserPrompts()
     #create a new network controller
     networkJob=NetworkController(up.uname, up.pword, devlist,cmdlist)
-    #networkJob.networkConnection(ipaddy='172.21.12.241')
+    #networkJob.networkConnection(ipaddy='192.168.1.1')
     networkJob.threads()
