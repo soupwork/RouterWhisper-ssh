@@ -22,14 +22,11 @@ class CLIparams:
             help='specify a single ip address to connect to') 
         
         #inputargs.add_argument('-log', action='store_true', 
-        #    help='this will create a log file "Convert7to8_Log_datetime"')
+        #    help='this will create a log file ""')
         # inputargs.add_argument('-logfile', help='same as log, but allows user to set filename')    
-        
-
+       
         inputargs.add_argument('-outfile', action='store',
             help='This option allowers user to specify a file for saving output. filename in single quotes')
-
-       
 
         cliargs = inputargs.parse_args()
         #self.filename = cliargs.f
