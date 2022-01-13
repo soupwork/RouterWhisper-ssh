@@ -41,6 +41,23 @@ class CLIparams:
         self.outfile=cliargs.outfile
         print(f"Outfile is {self.outfile}")
         
+        
+        
+        if self.ip:
+            hostlist=[self.ip]
+
+
+    def fileLoadList (self,filename,listname):
+        """this takes in the filename, and loads the list"""   
+
+        with open(filename, 'r') as file_handler: #open as read is the default
+            for line in file_handler:
+                listname.append(line)
+
+        print(f"file load list {listname}") 
+        return
+               
+
 
 def main():
     """Main sets up the program, and hands over to controller for the rest"""
