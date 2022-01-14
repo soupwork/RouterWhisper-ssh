@@ -7,9 +7,11 @@
 
 from netmiko import ConnectHandler
 import time
+from datetime import date
 import logging
 import concurrent.futures
-from viewThreadsCLI import UserPrompts
+# viewSSH is only needed if testing
+from viewSSH import UserPrompts
 
 class NetworkController: 
     """This a class for Netmiko Connections and Threads"""
@@ -22,6 +24,8 @@ class NetworkController:
         print ("username is :", self.uname)
         self.devlist = devlist #device list list of IPs
         self.cmdlist = cmdlist #list of commands to use
+        self.today = date.today()
+
 
     def threads(self):
         
@@ -62,11 +66,22 @@ class NetworkController:
         
         net_connect.enable()
         #
+        hostname=net_connect.find_prompt()
+        outfilename=hostname+ipaddy
+        print(f"output filename will be {outfilename}")
         for cmd in cmdlist:
             cmdout += '\n' + cmd + '\n ' + net_connect.send_command(cmd) + '\n'
         #net_connect.send_command('wr mem')
         net_connect.disconnect()
         print(f"{cmdout}")
+
+        # if outfilename exists, append to it, otherwise create it.
+        with open(outfilename, 'a') as file_handler: 
+            file_handler.write(f"{hostname}  {ipaddy} access date {self.today}")
+            file_handler.write(cmdout)
+            file_handler.write(f"{hostname}  {ipaddy} access date {self.today}")
+
+
         return(cmdout)
         #end NetworkConnection
         # 
