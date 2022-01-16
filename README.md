@@ -2,26 +2,25 @@
 Python Program to ssh into cisco devices
 --------------------
 This is the start of a framework for a program to SSH into cisco Devices.
-It could be used as-is, or could be built out into a Model-View-Controller OOP Design Patter.
+It could be used as-is, or could be built out into a Model-View-Controller OOP Design Pattern.
 
-The list of devices is presently a simple list in the program, but it would be easy to bring in an external list from a file, such as a csv.
+run " python mainSSH.py --help " to see all the command line options and descriptions.
 
-Presently there is only one command sent to the device. a list could be read in, possibly from a csv. 
+IP Address(es) can be brought in as a single IP, a list of IP's, or as a csv.
 
-Results could be stored in either a csv file, text file, or a json dictionary, for example.
+Router command(s) can be brought in as a single command, or as a csv.
+
+Results are stored in a single text file for each device
 
 The framework was meant to be easy for the network team to extend upon and make it their own.
 This could be fun and rewarding. With many smiles resulting from the reduction in manual work and multiple handling.
 
-doug. 2022 Jan 10th.
+doug. 2022 Jan 17th.
 
 Other Future Thoughts
 
-argparse can accept arguments passed in to the program at run time.
-  one use would be to specify a 'filepath' for all the files
-  one use would be to specify a 'commandfile' that lists the commands to be ran
-  one use would be to specify a 'host list' -a list of ip's to ssh into
-  
+argparse used to accept arguments passed in to the program at run time.
+    
 Since the program lends itself to Object Oriented Programming (OOP)
   typically, there is are at least three files, one for the view, one for the model, one for the controller.
   a model would be a class that contains data and methods (functions)
