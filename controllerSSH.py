@@ -16,15 +16,16 @@ from viewSSH import UserPrompts
 class NetworkController: 
     """This a class for Netmiko Connections and Threads"""
 
-    def __init__(self, uname, pword, devlist, cmdlist ):
+    def __init__(self, uname, pword, iplist, cmdlist, path ):
         """params username and password, device list, and commands list"""
         print("init Network Controller")
         self.uname = uname
         self.pword = pword
         print ("username is :", self.uname)
-        self.devlist = devlist #device list list of IPs
+        self.iplist = iplist #device list list of IPs
         self.cmdlist = cmdlist #list of commands to use
-        self.today = date.today()
+        self.today = str(date.today())
+        self.path=path
 
 
     def threads(self):
@@ -34,7 +35,7 @@ class NetworkController:
         with concurrent.futures.ThreadPoolExecutor(max_workers=3) as executor:
             connectdict = \
             {executor.submit(self.networkConnection, ipaddy):
-                        ipaddy for ipaddy in self.devlist}
+                        ipaddy for ipaddy in self.iplist}
             for future in concurrent.futures.as_completed(connectdict):
                 print("connect dict IP Addy is ", connectdict[future])
                 dataresult = connectdict[future]
@@ -67,19 +68,23 @@ class NetworkController:
         net_connect.enable()
         #
         hostname=net_connect.find_prompt()
-        outfilename=hostname+ipaddy
+        hostname = hostname[:-1]  #trim the '#' off the end of the string
+        outfilename=self.path + hostname + ipaddy[:-1] + '.txt'
         print(f"output filename will be {outfilename}")
-        for cmd in cmdlist:
-            cmdout += '\n' + cmd + '\n ' + net_connect.send_command(cmd) + '\n'
+        for cmd in self.cmdlist:
+            cmdout += '\n' + cmd + '\n ' + net_connect.send_command(cmd)
         #net_connect.send_command('wr mem')
         net_connect.disconnect()
         print(f"{cmdout}")
-
+        #outfilename = self.path + hostname + '1'
+        # print (f" output file name is {outfilename}")
         # if outfilename exists, append to it, otherwise create it.
         with open(outfilename, 'a') as file_handler: 
-            file_handler.write(f"{hostname}  {ipaddy} access date {self.today}")
+            print(f"writing file  {outfilename}")
+            delimiter = hostname + ipaddy + " access date " + self.today
+            file_handler.write(delimiter)
             file_handler.write(cmdout)
-            file_handler.write(f"{hostname}  {ipaddy} access date {self.today}")
+            file_handler.write(delimiter)
 
 
         return(cmdout)
@@ -88,11 +93,11 @@ class NetworkController:
         #     
 if __name__ == '__main__':
     """ testing the controller """
-    #devlist=['192.168.1.1', '192.168.1.1','192.168.1.1']
-    devlist=['192.168.1.1']
+    #iplist=['192.168.1.1', '192.168.1.1','192.168.1.1']
+    iplist=['192.168.1.1']
     cmdlist=['sh ver', 'sh clock','show clock']
     up=UserPrompts()
     #create a new network controller
-    networkJob=NetworkController(up.uname, up.pword, devlist,cmdlist)
+    networkJob=NetworkController(up.uname, up.pword, iplist,cmdlist)
     #networkJob.networkConnection(ipaddy='192.168.1.1')
     networkJob.threads()
