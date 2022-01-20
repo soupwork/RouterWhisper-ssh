@@ -30,3 +30,5 @@ While not really consistent with MVC, I like to have a Main file that handles se
   I have a separate controller that manages comms to the router through netmiko.
   this keeps the clutter from argparse out of the controller.
   
+Kirk Byers has awesome documentation
+https://github.com/ktbyers/netmiko/blob/develop/EXAMPLES.md
